@@ -60,8 +60,19 @@ public class FirePetProvider {
 
     }
 
-    public void update(){}
+    public void update(){
+        //TODO: implement the update method
+    }
 
-    public void delete(){}
+    public void delete(String petID){
+        DatabaseReference myRef = mFireDB.getDatabaseReference();
+
+
+        myRef.child(FirePetEntry.DB_ROOT)
+                .child(FirePetEntry.NODE_PETS)
+                .child(FirePetEntry.NODE_ID)
+                .child(petID)
+                .removeValue();
+    }
 
 }

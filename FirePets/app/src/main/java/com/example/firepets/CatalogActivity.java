@@ -56,6 +56,10 @@ public class CatalogActivity extends AppCompatActivity {
                 Intent intent = new Intent(CatalogActivity.this,EditorActivity.class);
                 startActivity(intent);
                 return true;
+            case  R.id.test_delete:
+
+                deleteOne("1");
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -64,5 +68,9 @@ public class CatalogActivity extends AppCompatActivity {
 
         mFireProvider.createAPet(new Pet("Boris","York","Male","12"));
 
+    }
+
+    private void deleteOne(String petID){
+        mFireProvider.delete(petID);
     }
 }
