@@ -13,6 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.firepets.data.FirePetProvider;
+import com.example.firepets.data.Pet;
+import com.example.firepets.data.PetFireContract.FirePetEntry;
+
 public class EditorActivity extends AppCompatActivity {
 
 
@@ -32,13 +36,17 @@ public class EditorActivity extends AppCompatActivity {
      * Gender of the pet. The possible values are:
      * 0 for unknown gender, 1 for male, 2 for female.
      */
-    private int mGender = 0;
+    private String mGender;
+
+    private FirePetProvider mFireProvider;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+        mFireProvider = new FirePetProvider();
+
 
         // Find all relevant views that we will need to read user input from
         mNameEditText = (EditText) findViewById(R.id.edit_pet_name);
@@ -71,11 +79,11 @@ public class EditorActivity extends AppCompatActivity {
                 String selection = (String) parent.getItemAtPosition(position);
                 if (!TextUtils.isEmpty(selection)) {
                     if (selection.equals(getString(R.string.gender_male))) {
-                     //   mGender = PetEntry.GENDER_MALE; // Male
+                      mGender = FirePetEntry.GENDER_MALE; // Male
                     } else if (selection.equals(getString(R.string.gender_female))) {
-                      //  mGender = PetEntry.GENDER_FEMALE; // Female
+                      mGender = FirePetEntry.GENDER_FEMALE; // Female
                     } else {
-                      //  mGender = PetEntry.GENDER_UNKNOWN;// Unknown
+                      mGender = FirePetEntry.GENDER_UNKNOWN;// Unknown
                     }
                 }
             }
@@ -83,7 +91,7 @@ public class EditorActivity extends AppCompatActivity {
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mGender = 0; // Unknown
+                mGender = FirePetEntry.GENDER_UNKNOWN; // Unknown
             }
         });
     }
@@ -103,9 +111,7 @@ public class EditorActivity extends AppCompatActivity {
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
                 // Do nothing for now
-
-
-
+                insertAPet();
                 finish();
                 return true;
             // Respond to a click on the "Delete" menu option
@@ -119,6 +125,15 @@ public class EditorActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void insertAPet(){
+        String petName = mNameEditText.getText().toString().trim();
+        String petBreed = mBreedEditText.getText().toString().trim();
+        String petGender = mGender;
+        String petWeight = mWeightEditText.getText().toString().trim();
+        Pet pet = new Pet(petName,petBreed,petGender,petWeight);
+        mFireProvider.createAPet(pet);
     }
 
 }

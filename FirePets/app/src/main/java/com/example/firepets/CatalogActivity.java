@@ -53,12 +53,16 @@ public class CatalogActivity extends AppCompatActivity {
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
                 // Do nothing for now
-                Intent intent = new Intent(CatalogActivity.this,EditorActivity.class);
-                startActivity(intent);
+
                 return true;
             case  R.id.test_delete:
 
                 deleteOne("1");
+                return true;
+            case R.id.action_insert_pet:
+
+                Intent intent = new Intent(CatalogActivity.this,EditorActivity.class);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

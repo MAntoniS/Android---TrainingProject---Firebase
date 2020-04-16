@@ -13,5 +13,9 @@ public class PetFireContract {
         public final static String DB_ROOT = "";
         public final static String NODE_PETS = "Pets";
 
+        public final static String GENDER_MALE = "Male";
+        public final static String GENDER_FEMALE = "Female";
+        public final static String GENDER_UNKNOWN = "Unknown";
+
     }
 }
